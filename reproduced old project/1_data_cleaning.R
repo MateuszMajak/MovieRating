@@ -1,4 +1,8 @@
 
+# R version: 4.0.2
+# RStudio version: 1.3.1093
+
+
 # Libraries used
 
 #install.packages('dplyr')

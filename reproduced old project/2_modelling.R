@@ -1,4 +1,6 @@
 
+# R version: 4.0.2
+# RStudio version: 1.3.1093
 
 # libraries used
 
@@ -46,12 +48,12 @@ load(file = "movies_old_cleaned.rda")
 stargazer(
   movies_old, type = "text", 
   summary.stat = c("n", "mean", "sd", "min", "max")
-)
+) # slightly different than in original report
 
 
 # correlation matrix
 
-movies_old <- movies_old[c(1,7,2,4,3,5,6)] # reordering
+movies_old <- movies_old[c(1,7,2,4,3,5,6)] # reordering to match the previous one
 
 p_matrix <- cor.mtest(movies_old, conf.level = .95)
 
@@ -78,7 +80,8 @@ ggplot(data = movies_old, aes(x = vote_average)) +
   stat_function(fun = dnorm,
                 color = 'red',
                 size = 1,
-                args = list(mean = mean(movies_old$vote_average), sd(movies_old$vote_average)))
+                args = list(mean = mean(movies_old$vote_average),
+                            sd(movies_old$vote_average))) # different than it was originally, big spike in the middle
 
 p1 <- ggplot(data = movies_old, aes(x = vote_count)) +
   geom_histogram(aes(y = ..density..))
@@ -137,7 +140,7 @@ multiplot(p1_ln, p2_ln, p3, p4, p5_ln, p6_ln, layout = design)
 
 
 
-# regression
+# 1st regression
 
 
 formula1 <- vote_average ~ budget_ln + years_old + revenue_ln + runtime + vote_count + popularity
@@ -218,11 +221,11 @@ resettest(linear4, power=2:3, type="fitted") # reject h0 so the specification is
 
 ## collinearity
 
-vif(linear3)
+vif(linear3) # similar to original results, no collinearity apart from years and years squared
 
 
 ## error distribution
 
-gglm(linear3)
+gglm(linear3) # it doesn't seem to ne normal distribution
 
-jarque.bera.test(linear3$residuals)
+jarque.bera.test(linear3$residuals) # reject h0 so distribution is not normal
