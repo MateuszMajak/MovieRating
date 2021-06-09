@@ -69,4 +69,40 @@ knitr::include_graphics("img/statistics_table_new2.jpg")
 ```
 
 
+## Some differences
+
+
+Old:
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+
+knitr::include_graphics("img/hist_old.jpg")  
+
+```
+
+New:
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+
+library(ggplot2)
+
+load(file = "data/movies_old_cleaned.rda") 
+
+ggplot(data = movies_old, aes(x = vote_average)) +
+  geom_histogram(aes(y = ..density..)) +
+  stat_function(fun = dnorm,
+                color = 'red',
+                size = 1,
+                args = list(mean = mean(movies_old$vote_average), sd(movies_old$vote_average)))
+```
+
+
+## Results
+
+
+- quite similar at first glance
+- passed RESET specification test originally
+- failed RESET specification test at 5% of significance level
+- error isn't normally distributed (previously it probably was)
+
+
+
 
