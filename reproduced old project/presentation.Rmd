@@ -1,0 +1,108 @@
+---
+title: "Movie Rating"
+author: "Mateusz Majak, Przemysław Mazurek"
+date: "9 06 2021"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+```
+
+## Main purpose
+
+- Reproduce old project
+- Check consistency of findings on a new dataset
+
+
+
+
+## Reproduce old project
+
+- new software (R vs. Stata)
+- lack of documentation about data preparation -> we tried to rely on report but information attached was too vague
+- not able to reproduce the exact results
+
+
+
+## Data preparation
+
+- originaly performed in Excel
+- this time we focused on obtaining the same data rather than on reasonable decisions
+
+
+
+## Preparation based on report description...
+
+...did not result in the same outcome
+
+Old:
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+
+knitr::include_graphics("img/statistics_table.jpg")  
+```
+
+New:
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+
+knitr::include_graphics("img/statistics_table_new1.jpg")  
+
+```
+
+
+## Trimming values to the range from old project
+
+
+
+Old:
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+
+knitr::include_graphics("img/statistics_table.jpg")  
+```
+
+New:
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+
+knitr::include_graphics("img/statistics_table_new2.jpg")  
+
+```
+
+
+## Some differences
+
+
+Old:
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+
+knitr::include_graphics("img/hist_old.jpg")  
+
+```
+
+New:
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+
+library(ggplot2)
+
+load(file = "data/movies_old_cleaned.rda") 
+
+ggplot(data = movies_old, aes(x = vote_average)) +
+  geom_histogram(aes(y = ..density..)) +
+  stat_function(fun = dnorm,
+                color = 'red',
+                size = 1,
+                args = list(mean = mean(movies_old$vote_average), sd(movies_old$vote_average)))
+```
+
+
+## Results
+
+
+- quite similar at first glance
+- passed RESET specification test originally
+- failed RESET specification test at 5% of significance level
+- error isn't normally distributed (previously it probably was)
+
+
+
+
