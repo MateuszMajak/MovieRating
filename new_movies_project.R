@@ -65,6 +65,11 @@ summary(movies_new$vote_average)
 summary(movies_train$vote_average)
 summary(movies_test$vote_average)
 
+# write.csv(movies_train, "movies_train.csv", row.names=FALSE)
+# write.csv(movies_test, "movies_test.csv", row.names=FALSE)
+movies_train <- read.csv('movies_train.csv', header = T)
+movies_test <- read.csv('movies_test.csv', header = T)
+
 # The distributions of train and test datasets haven't significantly changed
 # in comparison to the primary dataset.
 
@@ -100,7 +105,7 @@ movies_lm1 <- lm(vote_average ~ .,
 
 summary(movies_lm1)
 #R-squared 0.04323
-colnames(movies_train)
+
 #estimation with transformed variables
 movies_lm2 <- lm(vote_average ~ original_language + adult + vote_count +
                    runtime + log1p(revenue) +log1p(budget) + popularity + years_old, 
