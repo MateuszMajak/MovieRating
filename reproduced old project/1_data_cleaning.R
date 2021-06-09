@@ -46,6 +46,8 @@ movies_old %>%
 
 movies_old <- na.omit(movies_old) # omitting NAs
 
+save(movies_old, file = "movies_old.rda") # saving data
+
 
 # Variables statistics
 

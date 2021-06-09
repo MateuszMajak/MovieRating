@@ -1,0 +1,72 @@
+---
+title: "Movie Rating"
+author: "Mateusz Majak, Przemysław Mazurek"
+date: "9 06 2021"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+```
+
+## Main purpose
+
+- Reproduce old project
+- Check consistency of findings on a new dataset
+
+
+
+
+## Reproduce old project
+
+- new software (R vs. Stata)
+- lack of documentation about data preparation -> we tried to rely on report but information attached was too vague
+- not able to reproduce the exact results
+
+
+
+## Data preparation
+
+- originaly performed in Excel
+- this time we focused on obtaining the same data rather than on reasonable decisions
+
+
+
+## Preparation based on report description...
+
+...did not result in the same outcome
+
+Old:
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+
+knitr::include_graphics("img/statistics_table.jpg")  
+```
+
+New:
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+
+knitr::include_graphics("img/statistics_table_new1.jpg")  
+
+```
+
+
+## Trimming values to the range from old project
+
+
+
+Old:
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+
+knitr::include_graphics("img/statistics_table.jpg")  
+```
+
+New:
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+
+knitr::include_graphics("img/statistics_table_new2.jpg")  
+
+```
+
+
+
