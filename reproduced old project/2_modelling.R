@@ -26,6 +26,9 @@ library(car) # vif test
 #install.packages("gglm")
 library(gglm)
 
+#install.packages("tseries")
+library(tseries) # J-B test
+
 
 # directory
 
@@ -222,3 +225,4 @@ vif(linear3)
 
 gglm(linear3)
 
+jarque.bera.test(linear3$residuals)
