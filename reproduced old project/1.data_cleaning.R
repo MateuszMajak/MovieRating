@@ -7,7 +7,7 @@ library(dplyr)
 
 # directory
 
-setwd('...')
+setwd('reproduced old project/data')
 
 
 # Data reading
@@ -137,6 +137,11 @@ movies_old <- na.omit(movies_old)
 # descriptive statistics
 
 movies_old %>% summary()  # Still a little bit different than in raport
+
+
+# saving cleaned data
+
+save(movies_old, file = "movies_old_cleaned.rda")
 
 
 
