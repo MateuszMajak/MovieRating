@@ -217,5 +217,8 @@ resettest(linear4, power=2:3, type="fitted") # reject h0 so the specification is
 
 vif(linear3)
 
+
+## error distribution
+
 gglm(linear3)
 
