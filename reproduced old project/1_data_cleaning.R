@@ -4,6 +4,9 @@
 #install.packages('dplyr')
 library(dplyr)
 
+#install.packages('stargazer')
+library(stargazer) # for despcriptive statistics
+
 
 # directory
 
@@ -17,7 +20,7 @@ movies_old <- read.csv('tmdb_5000_movies_2019.csv', header = T)
 
 # Selecting variables
 
-movies_old <- movies_old[c('vote_average', 'vote_count', 'runtime', 'revenue', 'budget', 'popularity', 'release_date')]
+movies_old <- movies_old[c('vote_average', 'runtime', 'popularity', 'revenue', 'budget', 'release_date', 'vote_count')]
 
 
 # Creating new variable - years_old
@@ -27,6 +30,11 @@ movies_old$release_date <- as.Date((movies_old$release_date), format = "%Y-%m-%d
 movies_old$years_old <- as.integer((as.Date("2019-01-10") - movies_old$release_date) / 365) # calculating age
 
 movies_old$release_date <- NULL # deleting old variable
+
+
+# reordering columns to order in report
+
+movies_old <- movies_old[c(1:3,7,4:6)]
 
 
 # dealing with missing values
@@ -41,7 +49,10 @@ movies_old <- na.omit(movies_old) # omitting NAs
 
 # Variables statistics
 
-movies_old %>% summary()
+stargazer(
+  movies_old, type = "text", 
+  summary.stat = c("n", "mean", "sd", "min", "max")
+)
 
 
 
@@ -136,7 +147,10 @@ movies_old <- na.omit(movies_old)
 
 # descriptive statistics
 
-movies_old %>% summary()  # Still a little bit different than in raport
+stargazer(
+  movies_old, type = "text", 
+  summary.stat = c("n", "mean", "sd", "min", "max")
+) # Still a little bit different than in report
 
 
 # saving cleaned data
