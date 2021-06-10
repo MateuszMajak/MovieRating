@@ -11,6 +11,9 @@ library(dplyr)
 #install.packages('stargazer')
 library(stargazer) # for despcriptive statistics
 
+#install.packages('stargazer')
+library(mice) #checking missings
+
 
 # directory
 
@@ -47,6 +50,9 @@ movies_old %>%
   is.na() %>%
   colSums() %>%
   sort()
+
+movies_old %>% 
+  md.pattern(rotate.names = TRUE)
 
 movies_old <- na.omit(movies_old) # omitting NAs
 
@@ -145,6 +151,9 @@ movies_old %>%
   is.na() %>%
   colSums() %>%
   sort()
+
+movies_old %>% 
+  md.pattern(rotate.names = TRUE)
 
 movies_old <- na.omit(movies_old)
 

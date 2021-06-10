@@ -5,16 +5,24 @@
 # Libraries used
 library(dplyr)
 library(stargazer) # for descriptive statistics
+library(mice)
 library(corrplot)
+library(caret)
+library(bestNormalize)
+library(car)
+library(lmtest)
+library(tseries)
+
+
 
 # directory
 setwd("new project")
 
 # Data reading
-df1 <- readRDS("tmdb_data1.rds")
-df2 <- readRDS("tmdb_data2.rds")
+df1 <- readRDS("data/tmdb_data1.rds")
+df2 <- readRDS("data/tmdb_data2.rds")
 
-movies_new <- union_all(x1,x2)
+movies_new <- union_all(df1,df2)
 
 
 glimpse(movies_new)
@@ -25,12 +33,13 @@ movies_new <- movies_new[c('original_language','adult','vote_average', 'vote_cou
 # Data preperation
 glimpse(movies_new)
 
-movies_new$original_language <- as.factor(movies_new$original_language)
+movies_new$language_en <- as.factor(ifelse(movies_new$original_language == "en", 1, 0))
 movies_new$adult <- as.factor(movies_new$adult)
 movies_new$budget <- as.double(movies_new$budget) #we added NAs by this transformation
 movies_new$popularity <- as.double(movies_new$popularity) #we added NAs by this transformation
 movies_new$release_date <- as.Date(movies_new$release_date)
 movies_new$years_old <- as.integer((as.Date("2021-06-09") - movies_new$release_date) / 365) # calculating age
+movies_new$original_language <- NULL # deleting old variable
 movies_new$release_date <- NULL # deleting old variable
 
 # EDA
@@ -57,7 +66,7 @@ movies_new <- movies_new %>%
 movies_new %>% 
   md.pattern(rotate.names = TRUE)
 
-# We removed 6838 rows, which is 1% of the primary dataset. For now we have still
+# We removed 6827 rows, which is 1% of the primary dataset. For now we have still
 # a lot of NA values, but only within years_old and runtime columns.
 # We will deal with it after checking the significance of these variables.
 
@@ -107,14 +116,47 @@ movies_lm1 <- lm(vote_average ~ .,
                   data = movies_train)
 
 summary(movies_lm1)
-#R-squared 0.04256
+#R-squared 0.03246
+
+
+# transformation of revenues with yeo-johnson
+
+yeo <- yeojohnson(movies_train$revenue)
+
+movies_train$revenue_yeo <- yeo$x.t
+
+movies_test$revenue_yeo <- predict(yeo, newdata = movies_test$revenue) # applying on test data
+
 
 #estimation with transformed variables
-movies_lm2 <- lm(vote_average ~ original_language + adult + vote_count +
-                   runtime + log1p(revenue) +log1p(budget) + popularity + years_old, 
+movies_lm2 <- lm(vote_average ~ language_en + adult + vote_count +
+                   runtime + revenue_yeo +log1p(budget) + popularity + years_old, 
                  data = movies_train)
 
 summary(movies_lm2)
-#R-squared 0.05894
+#R-squared 0.04613
+
+
+# Diagnostics
+
+
+## Collinearity
+vif(movies_lm2) # no collinearity
+
+## RESET test
+resettest(movies_lm2, power=2:3, type="fitted") # linear form is not true, estimators are biased and won't give true values
+
+## Homoscedasticity
+bptest(movies_lm2, studentize=TRUE)  # reject h0 -> heteroscedasticity
+
+## distribution of error term
+jarque.bera.test(movies_lm2$residuals) # reject h0 so not normal, but sample is huge this time
+
+
+
+
+
+
+
 
 
