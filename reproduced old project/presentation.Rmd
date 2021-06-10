@@ -2,7 +2,11 @@
 title: "Movie Rating"
 author: "Mateusz Majak, Przemysław Mazurek"
 date: "9 06 2021"
-output: beamer_presentation
+output: 
+  ioslides_presentation:
+    transition: slower
+    widescreen: true
+    smaller: true
 ---
 
 ```{r setup, include=FALSE}
@@ -70,19 +74,17 @@ knitr::include_graphics("img/statistics_table_new2.jpg")
 
 
 ## Some differences
-
-
 Old:
-```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "220px", out.width="420px"}
 
 knitr::include_graphics("img/hist_old.jpg")  
 
 ```
-
 New:
-```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "220px", out.width="420px"}
 
 library(ggplot2)
+library(ggthemes)
 
 load(file = "data/movies_old_cleaned.rda") 
 
@@ -91,7 +93,7 @@ ggplot(data = movies_old, aes(x = vote_average)) +
   stat_function(fun = dnorm,
                 color = 'red',
                 size = 1,
-                args = list(mean = mean(movies_old$vote_average), sd(movies_old$vote_average)))
+                args = list(mean = mean(movies_old$vote_average), sd(movies_old$vote_average))) + theme_stata()
 ```
 
 
