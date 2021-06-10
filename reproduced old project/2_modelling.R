@@ -20,7 +20,7 @@ library(ggplot2) # histograms
 library(Rmisc) # multiple plots
 
 #install.packages("lmtest")
-library("lmtest") # reset test
+library(lmtest) # reset test
 
 #install.packages("car")
 library(car) # vif test
@@ -212,7 +212,7 @@ linear4 <- lm(formula4, movies_old)
 
 summary(linear4) # all variables significant, Adj. R2 = 0.449
 
-resettest(linear4, power=2:3, type="fitted") # reject h0 so the specification is still wrong
+resettest(linear4, power=2:3, type="fitted") # reject h0 so the specification is still wrong, estimators are biased and won't give true values
 
 
 
