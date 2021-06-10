@@ -4,14 +4,11 @@
 
 # Libraries used
 library(dplyr)
-library(stargazer) # for despcriptive statistics
+library(stargazer) # for descriptive statistics
 library(corrplot)
 
-devtools::install_github("ldurazo/kaggler")
-
 # directory
-getwd()
-setwd("/Users/mateuszmajak/Documents/GitHub/MovieRating")
+setwd("new project")
 
 # Data reading
 df1 <- readRDS("tmdb_data1.rds")
@@ -38,6 +35,11 @@ movies_new$release_date <- NULL # deleting old variable
 
 # EDA
 glimpse(movies_new)
+
+stargazer(
+  movies_new, type = "text", 
+  summary.stat = c("n", "mean", "sd", "min", "max")
+)
 
 colSums(is.na(movies_new)) %>% 
   sort()
@@ -73,11 +75,6 @@ summary(movies_new$vote_average)
 summary(movies_train$vote_average)
 summary(movies_test$vote_average)
 
-# write.csv(movies_train, "movies_train.csv", row.names=FALSE)
-# write.csv(movies_test, "movies_test.csv", row.names=FALSE)
-movies_train <- read.csv('movies_train.csv', header = T)
-movies_test <- read.csv('movies_test.csv', header = T)
-
 # The distributions of train and test datasets haven't significantly changed
 # in comparison to the primary dataset.
 
@@ -104,15 +101,13 @@ corrplot.mixed(movies_correlations,
                tl.pos = "lt",
                tl.cex = 0.7)
 
-# There is a strong correlation (0.78) between vote_count and revenue variables.
-
 # Modeling
 #estimation of the model with all variables
 movies_lm1 <- lm(vote_average ~ ., 
                   data = movies_train)
 
 summary(movies_lm1)
-#R-squared 0.04323
+#R-squared 0.04256
 
 #estimation with transformed variables
 movies_lm2 <- lm(vote_average ~ original_language + adult + vote_count +
@@ -120,6 +115,6 @@ movies_lm2 <- lm(vote_average ~ original_language + adult + vote_count +
                  data = movies_train)
 
 summary(movies_lm2)
-#R-squared 0.05942
+#R-squared 0.05894
 
 
