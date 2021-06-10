@@ -149,6 +149,8 @@ popularity                 0.00   0.00     2.65   0.01
 - failed RESET specification test at 5% of significance level
 - error isn't normally distributed (previously it probably was)
 
-
+## Poject based on a new dataset
+- large dataset from the Kaggle platform containing 650234 movies and TV shows
+- applying exact same  methods used in the reproduced project
 
 
