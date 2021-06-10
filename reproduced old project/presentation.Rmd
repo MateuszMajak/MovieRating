@@ -47,7 +47,7 @@ Old:
 knitr::include_graphics("img/statistics_table.jpg")  
 ```
 
-New:
+Reproduced:
 ```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "160px", out.width="450px"}
 
 knitr::include_graphics("img/statistics_table_new1.jpg")  
@@ -65,7 +65,7 @@ Old:
 knitr::include_graphics("img/statistics_table.jpg")  
 ```
 
-New:
+Reproduced:
 ```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "160px", out.width="450px"}
 
 knitr::include_graphics("img/statistics_table_new2.jpg")  
@@ -80,7 +80,7 @@ Old:
 knitr::include_graphics("img/hist_old.jpg")  
 
 ```
-New:
+Reproduced:
 ```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "220px", out.width="420px"}
 
 library(ggplot2)
@@ -96,10 +96,54 @@ ggplot(data = movies_old, aes(x = vote_average)) +
                 args = list(mean = mean(movies_old$vote_average), sd(movies_old$vote_average))) + theme_stata()
 ```
 
+## Reproduced data variables correlation
+
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "left", out.height= "500px", out.width="800px"}
+
+knitr::include_graphics("img/corrplot_reproduced.png")  
+
+
+```
+
+## Reproduced data variables histograms
+
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "left", out.height= "500px", out.width="950px"}
+
+knitr::include_graphics("img/variables_histograms.png")  
+
+```
+
+## Reproduced data variables histograms with logs
+
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "left", out.height= "500px", out.width="950px"}
+
+knitr::include_graphics("img/reproduced_variables_log_histograms.png")  
+
+```
 
 ## Results
 
+Old R² = 0.43
 
+Reproduced R² = 0.44
+
+
+Standard errors: OLS
+------------------------------------------------------
+                           Est.   S.E.   t val.      p
+----------------------- ------- ------ -------- ------
+(Intercept)               -0.51   0.39    -1.32   0.19
+budget_ln                 -0.25   0.01   -17.67   0.00
+years_old                  0.05   0.01     5.13   0.00
+years_old_squared         -0.00   0.00    -3.21   0.00
+revenue_ln                -0.06   0.01    -4.18   0.00
+runtime_ln                 1.91   0.08    22.80   0.00
+vote_count_ln              0.41   0.02    22.28   0.00
+popularity                 0.00   0.00     2.65   0.01
+------------------------------------------------------
+
+
+## Results - other conclusions
 - quite similar at first glance
 - passed RESET specification test originally
 - failed RESET specification test at 5% of significance level
