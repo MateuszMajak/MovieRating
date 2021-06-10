@@ -11,8 +11,8 @@ library(corrplot)
 setwd("new project")
 
 # Data reading
-df1 <- readRDS("tmdb_data1.rds")
-df2 <- readRDS("tmdb_data2.rds")
+df1 <- readRDS("data/tmdb_data1.rds")
+df2 <- readRDS("data/tmdb_data2.rds")
 
 movies_new <- union_all(x1,x2)
 
