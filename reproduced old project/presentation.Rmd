@@ -10,7 +10,6 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-
 ```
 
 ## Main purpose
@@ -43,7 +42,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 Old:
 ```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "200px", out.width="450px"}
-
+library(rmarkdown)
 knitr::include_graphics("img/statistics_table.jpg")  
 ```
 
@@ -113,22 +112,23 @@ knitr::include_graphics("img/variables_histograms.png")
 
 ```
 
-## Reproduced data variables histograms with logs
-
-```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "left", out.height= "500px", out.width="950px"}
-
-knitr::include_graphics("img/reproduced_variables_log_histograms.png")  
-
-```
 
 ## Results
 
-Old R² = 0.43
+Old R² = 0.446
 
 Reproduced R² = 0.44
 
+## Old model summary
 
-Standard errors: OLS
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "400px", out.width="300px"}
+
+knitr::include_graphics("img/old_model_summary.png")  
+
+```
+
+
+Reproduced model summary
 ------------------------------------------------------
                            Est.   S.E.   t val.      p
 ----------------------- ------- ------ -------- ------
@@ -149,8 +149,69 @@ popularity                 0.00   0.00     2.65   0.01
 - failed RESET specification test at 5% of significance level
 - error isn't normally distributed (previously it probably was)
 
-## Poject based on a new dataset
-- large dataset from the Kaggle platform containing 650234 movies and TV shows
+## Project based on a new dataset
+- large dataset from the Kaggle platform containing 650 234 movies and TV shows
 - applying exact same  methods used in the reproduced project
+
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "200px", out.width="550px"}
+
+knitr::include_graphics("img/new_data_statistics.png")  
+```
+
+## Dependent variable density
+
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "450px", out.width="900px"}
+
+new_movies_train <- readRDS(file = "data/new_movies_train.rda") 
+
+ggplot(data = new_movies_train, aes(x = vote_average)) +
+  geom_histogram(aes(y = ..density..)) +
+  stat_function(fun = dnorm,
+                color = 'red',
+                size = 1,
+                args = list(mean = mean(new_movies_train$vote_average), sd(movies_old$vote_average))) + theme_stata()
+```
+
+## New dataset variables correlations
+
+- No strong correlation between variables
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "left", out.height= "500px", out.width="800px"}
+
+knitr::include_graphics("img/new_dataset_variables_corrplot.png")  
+
+```
+
+## Modelling
+
+- No strong correlation between variables
+
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "left", out.height= "400px", out.width="700px"}
+
+knitr::include_graphics("img/new_model1_summary.png")  
+
+```
+
+## Final model
+
+- transformation of revenues with yeo-johnson
+- transformation of budget with natural logarithm
+
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "left", out.height= "400px", out.width="700px"}
+
+knitr::include_graphics("img/new_model2_summary.png")  
+
+```
+
+## Results
+
+- R² a bit higher (4.62%) after transformation of budget and revenue variable
+- Results on the test dataset: 
+
+MSE = 9.91, RMSE = 3.15, MAE = 2.89, 
+
+MedAE = 2.66, MSLE = 1.09, R² = 0.18
+
+- R² a lot higher with prediction on the test dataset
+
 
 
