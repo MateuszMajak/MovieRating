@@ -3,6 +3,10 @@
 # RStudio version: 1.3.1093
 
 
+# This analysis is intended to reproduce to the biggest possible extent 
+# the results presented in the old report
+
+
 # Libraries used
 
 #install.packages('dplyr')

@@ -50,11 +50,13 @@ stargazer(
   summary.stat = c("n", "mean", "sd", "min", "max")
 )
 
+
 colSums(is.na(movies_new)) %>% 
   sort()
 
 movies_new %>% 
   md.pattern(rotate.names = TRUE)
+
 
 # It looks like removing all rows containing NA value in release_date will deal 
 # with most of the missings. However, we have to remove 1/6 of the whole dataset 
@@ -69,6 +71,8 @@ movies_new %>%
 # We removed 6827 rows, which is 1% of the primary dataset. For now we have still
 # a lot of NA values, but only within years_old and runtime columns.
 # We will deal with it after checking the significance of these variables.
+
+
 
 # Data division
 set.seed(987654321)
@@ -155,8 +159,23 @@ jarque.bera.test(movies_lm2$residuals) # reject h0 so not normal, but sample is 
 
 
 
+# Predictions
 
+movies_lm2_pred <- predict(movies_lm2, movies_test)
 
+regressionMetrics <- function(real, predicted) {
+  MSE <- mean((real - predicted)^2, na.rm = T)
+  RMSE <- sqrt(MSE)
+  MAE <- mean(abs(real - predicted), na.rm = T)
+  MedAE <- median(abs(real - predicted), na.rm = T)
+  MSLE <- mean((log(1 + real) - log(1 + predicted))^2, na.rm = T)
+  TSS <- sum((real - mean(real))^2, na.rm = T)
+  RSS <- sum((predicted - real)^2, na.rm = T)
+  R2 <- 1 - RSS/TSS
+  
+  result <- data.frame(MSE, RMSE, MAE, MedAE, MSLE, R2)
+  return(result)
+}
 
-
-
+regressionMetrics(real = movies_test$vote_average,
+                  predicted = movies_lm2_pred)
