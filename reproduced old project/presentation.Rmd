@@ -1,12 +1,11 @@
 ---
 title: "Movie Rating"
 author: "Mateusz Majak, Przemysław Mazurek"
-date: "9 06 2021"
+date: "10.06.2021"
 output: 
   ioslides_presentation:
     transition: slower
     widescreen: true
-    smaller: true
 ---
 
 ```{r setup, include=FALSE}
@@ -18,6 +17,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 - Reproduce old project
 - Check consistency of findings on a new dataset
+- Use version control to make the project reproducible
 
 
 
@@ -42,13 +42,13 @@ knitr::opts_chunk$set(echo = FALSE)
 ...did not result in the same outcome
 
 Old:
-```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "200px", out.width="450px"}
 
 knitr::include_graphics("img/statistics_table.jpg")  
 ```
 
 New:
-```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "160px", out.width="450px"}
 
 knitr::include_graphics("img/statistics_table_new1.jpg")  
 
@@ -60,13 +60,13 @@ knitr::include_graphics("img/statistics_table_new1.jpg")
 
 
 Old:
-```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "200px", out.width="450px"}
 
 knitr::include_graphics("img/statistics_table.jpg")  
 ```
 
 New:
-```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "80px", out.width="180px"}
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "160px", out.width="450px"}
 
 knitr::include_graphics("img/statistics_table_new2.jpg")  
 
