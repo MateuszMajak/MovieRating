@@ -127,7 +127,6 @@ knitr::include_graphics("img/old_model_summary.png")
 
 ```
 
-
 Reproduced model summary
 ------------------------------------------------------
                            Est.   S.E.   t val.      p
@@ -169,7 +168,7 @@ ggplot(data = new_movies_train, aes(x = vote_average)) +
   stat_function(fun = dnorm,
                 color = 'red',
                 size = 1,
-                args = list(mean = mean(new_movies_train$vote_average), sd(movies_old$vote_average))) + theme_stata()
+                args = list(mean = mean(new_movies_train$vote_average), sd(new_movies_train$vote_average))) + theme_stata()
 ```
 
 ## New dataset variables correlations
