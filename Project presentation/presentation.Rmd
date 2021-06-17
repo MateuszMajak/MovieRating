@@ -160,6 +160,11 @@ Reproduced_model_summary_table
 knitr::include_graphics("img/new_data_statistics.png")  
 ```
 
+## Data preparation
+- We removed 6827 rows (around 1% of the data) with the NA values in the vote_average column
+- We removed all the rows with vote_average lower than 1
+  - TMDb has rating scale 1-10, so we expect that every value below 1 comes from NA values
+
 ## Dependent variable density
 
 ```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "450px", out.width="900px"}
@@ -176,8 +181,8 @@ ggplot(data = new_movies_train, aes(x = vote_average)) +
 
 ## New dataset variables correlations
 
-- No strong correlation between variables
-```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "left", out.height= "500px", out.width="800px"}
+- We can see the strong correlation between budget and revenue, but also between vote_count and revenue and budget
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "left", out.height= "450px", out.width="800px"}
 
 knitr::include_graphics("img/new_dataset_variables_corrplot.png")  
 
@@ -185,9 +190,11 @@ knitr::include_graphics("img/new_dataset_variables_corrplot.png")
 
 ## Modelling
 
-- No strong correlation between variables
+- Estimation of the model with all variables
+- Revenue is not significant on 5% level of significance. We've seen that it is strongly skewed.
+  - It may have zero or negative values so we'll transform it with yeo-johnson transformation
 
-```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "left", out.height= "400px", out.width="700px"}
+```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "left", out.height= "300px", out.width="600px"}
 
 knitr::include_graphics("img/new_model1_summary.png")  
 
@@ -195,8 +202,8 @@ knitr::include_graphics("img/new_model1_summary.png")
 
 ## Final model
 
-- transformation of revenues with yeo-johnson
-- transformation of budget with natural logarithm
+- We added transformation of budget with natural logarithm
+- There is hardly any difference in R² but revenue_yeo is significant now.
 
 ```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "left", out.height= "400px", out.width="700px"}
 
@@ -205,15 +212,21 @@ knitr::include_graphics("img/new_model2_summary.png")
 ```
 
 ## Results
-
-- R² a bit higher (4.62%) after transformation of budget and revenue variable
 - Results on the test dataset: 
 
-MSE = 9.91, RMSE = 3.15, MAE = 2.89, 
+MSE = 2.83, RMSE = 1.68, MAE = 1.26, 
 
-MedAE = 2.66, MSLE = 1.09, R² = 0.18
+MedAE = 0.93, MSLE = 0.08, R² = 0.124
 
 - R² a lot higher with prediction on the test dataset
 
+## Additional thoughts
 
+- The dependent variable is continuous, but it comes frome the likert scale, which 
+is the ordinal measurement scale
+  - It may cause problem, because we treat the target variable as a continuous,
+  but people can not vote in such way
+  - According to the market analyzes, people are more likely to choose the upper
+  half of the scale, so the average vote is not a 5, bot more likely 6 or 7
+- There is no one specific way to deal with such data across the literature
 
