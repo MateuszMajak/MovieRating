@@ -127,7 +127,7 @@ knitr::include_graphics("img/old_model_summary.png")
 
 ```
 
-## Test slide
+## Reproduced model summary
 ```{r, echo = F, warning=FALSE, message=FALSE, fig.align = "center", out.height= "200px", out.width="550px"}
 
 variables_names <- c('(Intercept)','budget_ln','years_old','years_old_squared',
